@@ -16,7 +16,7 @@
 
         // Prepare the SQL statement to fetch provisions with optional limit
         if ($limit !== null && $limit > 0) {
-            $stmt = $conn->prepare("SELECT `name`, `id` AS `code`, `cost`, `description` FROM `provision` ORDER BY `id` DESC LIMIT ?");
+            $stmt = $conn->prepare("SELECT `name`, `id` AS `code`, `cost`, `description` FROM `provision` ORDER BY `id` ASC LIMIT ?");
             $stmt->bind_param("i", $limit);
         } else {
             $stmt = $conn->prepare("SELECT `name`, `id` AS `code`, `cost`, `description` FROM `provision`");
