@@ -18,7 +18,7 @@
 
         // Prepare the SQL statement to fetch appointments with optional limit
         if ($limit !== null) {
-            $stmt = $conn->prepare("SELECT patient.name, patient.surname, patient.amka, patient_physio.timestamp 
+            $stmt = $conn->prepare("SELECT patient.name, patient.surname, patient.amka, patient_physio.timestamp, patient_physio.patient_id 
                                     FROM patient
                                     INNER JOIN patient_physio ON patient.id = patient_physio.patient_id
                                     WHERE DATE(patient_physio.timestamp) = ? AND patient_physio.status = 'accepted' AND patient_physio.physio_id = ?
@@ -27,7 +27,7 @@
             $stmt->bind_param("sii", $date, $physio, $limit);
         }
         else {
-            $stmt = $conn->prepare("SELECT patient.name, patient.surname, patient.amka, patient_physio.timestamp 
+            $stmt = $conn->prepare("SELECT patient.name, patient.surname, patient.amka, patient_physio.timestamp, patient_physio.patient_id  
                     FROM patient
                     INNER JOIN patient_physio ON patient.id = patient_physio.patient_id
                     WHERE DATE(patient_physio.timestamp) = ? AND patient_physio.status = 'accepted' AND patient_physio.physio_id = ?
@@ -39,7 +39,7 @@
         $stmt->execute();
 
         // Bind the result variables
-        $stmt->bind_result($name, $surname, $amka, $timestamp);
+        $stmt->bind_result($name, $surname, $amka, $timestamp, $patientId);
 
         // Create an empty array to store appointments
         $appointments = array();
@@ -50,7 +50,8 @@
             'name' => $name,
             'surname' => $surname,
             'amka' => $amka,
-			'timestamp' => $timestamp
+			'timestamp' => $timestamp,
+            'patientId' => $patientId
             );
         }
 
