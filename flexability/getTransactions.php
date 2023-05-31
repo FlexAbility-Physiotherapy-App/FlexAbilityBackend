@@ -18,17 +18,19 @@
 
         // Prepare the SQL statement to fetch transactions with optional limit
         if ($limit !== null && $limit > 0) {
-            $stmt = $conn->prepare("SELECT timestamp, physio_id, cost, name 
+            $stmt = $conn->prepare("SELECT pp.timestamp, pp.physio_id, pp.cost, p.name, pr.name
                                     FROM patient_physio pp
                                     INNER JOIN physio p ON pp.physio_id = p.id
+                                    INNER JOIN provision pr ON pp.provision_id = pr.id
                                     ORDER BY physio_id ASC 
                                     LIMIT ?");
             $stmt->bind_param("i", $limit);
         } else {
-            $stmt = $conn->prepare("SELECT timestamp, physio_id, cost, name
-                                    FROM patient_physio pp
-                                    INNER JOIN physio p ON pp.physio_id = p.id
-                                    ORDER BY physio_id ASC ");
+            $stmt = $conn->prepare("SELECT pp.timestamp, pp.physio_id, pp.cost, p.name, pr.name
+                                    FROM physio p
+                                    JOIN patient_physio pp ON pp.physio_id = p.id
+                                    JOIN provision pr ON pr.id = pp.provision_id
+                                    ORDER BY physio_id ASC");
             // $stmt->bind_param("si", $date, $physio);
         }
         
@@ -37,7 +39,7 @@
         $stmt->execute();
 
         // Bind the result variables
-        $stmt->bind_result($time, $id, $cost, $name);
+        $stmt->bind_result($time, $id, $cost, $ph_name, $pr_name);
 
         // Create an empty array to store transactions
         $transactions = array();
@@ -48,7 +50,8 @@
             'date' => $time,
             'id' => $id,
             'cost' => $cost,
-            'name' => $name
+            'ph_name' => $ph_name,
+            'pr_name' => $pr_name
             );
         }
 
@@ -74,3 +77,4 @@
     $conn->close();
 
 ?>
+
