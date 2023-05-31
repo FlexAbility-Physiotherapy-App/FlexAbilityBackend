@@ -1,12 +1,5 @@
 <?php
-    // Database credentials
-    $host="localhost";
-    $uname="root";
-    $pass="";
-    $dbname="flexability";
-
-    // Establish a database connection
-    $conn = new mysqli($host, $uname, $pass, $dbname);
+    require('config.php');
 
     // Check if it's a GET request
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {

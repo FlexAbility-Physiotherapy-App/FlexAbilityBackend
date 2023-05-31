@@ -1,26 +1,11 @@
 <?php
-    // Database credentials
-    $host="localhost";
-    $uname="root";
-    $pass="";
-    $dbname="flexability";
+    require('config.php');
 
     // Get the POST parameters
     $name = $_GET['name'];
     $id = $_GET['id'];
     $cost = $_GET['cost'];
     $description = $_GET['description'];
-
-    // Establish a database connection
-    $conn = new mysqli($host, $uname, $pass, $dbname);
-
-    // Check the connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Connection successful
-    echo "Connected successfully.<br>";
 
     // Prepare the SQL statement
     $stmt = $conn->prepare("INSERT INTO `provision` (`id`, `description`, `cost`, `name`) VALUES (?, ?, ?, ?)");
