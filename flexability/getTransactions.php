@@ -12,8 +12,7 @@
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         // Get the optional limit parameter from the URL and parameters date and id
-        // $date = isset($_GET['date']) ? $_GET['date'] : '';
-        // $physio = isset($_GET['id']) ? intval($_GET['id']) : null;
+        $patient = isset($_GET['pid']) ? intval($_GET['pid']) : null;
         $limit = isset($_GET['limit']) ? intval($_GET['limit']) : null;
 
         // Prepare the SQL statement to fetch transactions with optional limit
@@ -22,16 +21,18 @@
                                     FROM patient_physio pp
                                     INNER JOIN physio p ON pp.physio_id = p.id
                                     INNER JOIN provision pr ON pp.provision_id = pr.id
+                                    WHERE pp.patient_id = ?
                                     ORDER BY physio_id ASC 
                                     LIMIT ?");
-            $stmt->bind_param("i", $limit);
+            $stmt->bind_param("ii", $patient, $limit);
         } else {
             $stmt = $conn->prepare("SELECT pp.timestamp, pp.physio_id, pp.cost, p.name, pr.name
                                     FROM physio p
                                     JOIN patient_physio pp ON pp.physio_id = p.id
                                     JOIN provision pr ON pr.id = pp.provision_id
+                                    WHERE pp.patient_id = ?
                                     ORDER BY physio_id ASC");
-            // $stmt->bind_param("si", $date, $physio);
+            $stmt->bind_param("i", $patient);
         }
         
         
