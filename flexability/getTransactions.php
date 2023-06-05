@@ -3,10 +3,13 @@
     require('config.php');
 
     // Check if it's a GET request
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') 
+    {
 
         // Get the optional limit parameter from the URL and parameters date and id
+        $date = isset($_GET["date"]) ? $_GET["date"] : null;
         $patient = isset($_GET['pid']) ? intval($_GET['pid']) : null;
+        $physio = isset($_GET['phid']) ? intval($_GET['phid']) : null;
         $limit = isset($_GET['limit']) ? intval($_GET['limit']) : null;
 
         // Prepare the SQL statement to fetch transactions with optional limit
@@ -15,16 +18,29 @@
                                     FROM patient_physio pp
                                     INNER JOIN physio p ON pp.physio_id = p.id
                                     INNER JOIN provision pr ON pp.provision_id = pr.id
-                                    WHERE pp.patient_id = ?
-                                    ORDER BY physio_id ASC 
+                                    WHERE pp.patient_id = ? AND pp.status = 'finished'
+                                    ORDER BY physio_id ASC  
                                     LIMIT ?");
             $stmt->bind_param("ii", $patient, $limit);
-        } else {
+        } 
+        elseif($date !== null && $physio !== null) 
+        {
+            $stmt = $conn->prepare("SELECT pp.timestamp, pp.physio_id, pp.cost, p.name, pr.name
+                                    FROM physio p
+                                    JOIN patient_physio pp ON pp.physio_id = p.id
+                                    JOIN provision pr ON pr.id = pp.provision_id 
+                                    WHERE pp.physio_id = ? AND pp.patient_id = ? AND pp.status = 'finished' AND DATE(pp.timestamp) = ?
+                                    ORDER BY physio_id ASC");
+                                    
+            $stmt->bind_param("iis", $physio, $patient, $date);
+        }
+        else 
+        {
             $stmt = $conn->prepare("SELECT pp.timestamp, pp.physio_id, pp.cost, p.name, pr.name
                                     FROM physio p
                                     JOIN patient_physio pp ON pp.physio_id = p.id
                                     JOIN provision pr ON pr.id = pp.provision_id
-                                    WHERE pp.patient_id = ?
+                                    WHERE pp.patient_id = ? AND pp.status = 'finished'
                                     ORDER BY physio_id ASC");
             $stmt->bind_param("i", $patient);
         }
@@ -40,7 +56,8 @@
         $transactions = array();
 
         // Fetch transactions and add them to the array
-        while ($stmt->fetch()) {
+        while ($stmt->fetch()) 
+        {
             $transactions[] = array(
             'date' => $time,
             'id' => $id,
