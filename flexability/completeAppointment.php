@@ -9,7 +9,7 @@
     $comment= $_GET['comment'];
 
     // Construct query
-    $sql = "UPDATE patient_physio SET comment='$comment', status='complete' WHERE patient_id=$patient_id AND physio_id=$physio_id AND timestamp='$timestamp'";
+    $sql = "UPDATE patient_physio SET comment='$comment', status='completed' WHERE patient_id=$patient_id AND physio_id=$physio_id AND timestamp='$timestamp'";
 
     // Print result
     if(mysqli_query($conn, $sql)) {
