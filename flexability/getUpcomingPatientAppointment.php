@@ -8,7 +8,7 @@
 
         $sql = "SELECT * FROM patient_physio
                 INNER JOIN physio ON patient_physio.physio_id = physio.id
-                WHERE patient_id = '$id' ORDER BY timestamp ASC LIMIT 1;";
+                WHERE patient_id = '$id' AND status = 'accepted' ORDER BY timestamp ASC LIMIT 1;";
         $result = $conn->query($sql);
         if ($result !== false && $result->num_rows > 0) {
             $upcomingAppointmentTimestamp = null;
