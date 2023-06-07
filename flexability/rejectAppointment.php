@@ -7,7 +7,7 @@
     $timestamp= $_GET['timestamp'];
 
     // Or alltogether
-    $sql = "UPDATE patient_physio SET status='rejected' WHERE patient_id=$patient_id AND physio_id=$physio_id AND timestamp='$timestamp'";
+    $sql = "DELETE FROM patient_physio WHERE patient_id = $patient_id AND physio_id = $physio_id AND timestamp = '$timestamp'";
 
     if(mysqli_query($conn, $sql)) {
         echo "Appointment was rejected.";
