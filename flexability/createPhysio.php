@@ -1,28 +1,50 @@
 <?php
-    require('config.php');
-
-    // Get the POST parameters
-    $id = $_GET['id'];
+	require('config.php');
+		
+	// Get the POST parameters
 	$name = $_GET['name'];
-    $address = $_GET['address'];
-    $phone = $_GET['phone_number'];
-    $ssn = $_GET['ssn'];
+	$address = $_GET['address'];
+	$phone = $_GET['phone'];
+	$afm = $_GET['afm'];
 
-    // Prepare the SQL statement
-    $stmt = $conn->prepare("INSERT INTO `physio` (`id`, `address`, `name`, `owner`, 'afm', 'phone_number') VALUES (?, ?, ?, ?, ?, ?)");
+	$password = "1234";
+	$category = "physio";
 
-    // Bind the parameters to the statement
-    $stmt->bind_param("ssds", $id, $address, $name, $owner, $afm, $phone_number);
+	// Prepare the SQL statement to insert the user
+	$stmt = $conn->prepare("INSERT INTO `user` (`username`, `password`, `category`) VALUES (?, ?, ?)");
 
-    // Execute the statement
-    if ($stmt->execute()) {
-        // The physio entry was successfully created
-        echo "Physio entry created successfully.";
-    } else {
-        // An error occurred while creating the physio entry
-        echo "Error creating physio entry: " . $stmt->error;
-    }
+	// Bind the parameters to the statement
+	$stmt->bind_param("sss", $afm, $password, $category);
 
-    // Close the statement
-    $stmt->close();
+	// Execute the statement
+	if ($stmt->execute()) {
+		// The user entry was successfully created
+
+		// Get the ID of the newly created user
+		$id = $stmt->insert_id;
+
+		echo "User entry created successfully.";
+	} else {
+		// An error occurred while creating the user entry
+		echo "Error creating User entry: " . $stmt->error;
+	}
+	$stmt->close();
+
+	// Prepare the SQL statement to insert the patient
+	$stmt = $conn->prepare("INSERT INTO `physio` (`id`, `name`, `address`, `phone_number`, `afm`) VALUES (?, ?, ?, ?, ?)");
+
+	// Bind the parameters to the statement
+	$stmt->bind_param("issss", $id, $name, $address, $phone, $afm);
+
+	// Execute the statement
+	if ($stmt->execute()) {
+		// The patient entry was successfully created
+		echo "Patient entry created successfully.";
+	} else {
+		// An error occurred while creating the patient entry
+		echo "Error creating Patient entry: " . $stmt->error;
+	}
+
+	// Close the statement
+	$stmt->close();
 ?>
