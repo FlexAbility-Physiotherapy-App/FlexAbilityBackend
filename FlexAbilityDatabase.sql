@@ -83,6 +83,9 @@ CREATE TABLE IF NOT EXISTS `patient_physio` (
   CONSTRAINT `fk_patient_physio_provision` FOREIGN KEY (`provision_id`) REFERENCES `provision` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Update patient_physio timestamp
+ALTER TABLE `patient_physio` CHANGE `timestamp` `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
 -- Data exporting was unselected.
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
