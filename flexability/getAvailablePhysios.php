@@ -25,7 +25,7 @@
 
         $physioObjects = array();
         $physioIdsString = implode(',', $availablePhysioIds);
-        $sql = "SELECT name, phone_number, id FROM physio WHERE id IN ($physioIdsString)";
+        $sql = "SELECT name, phone_number, id, address, afm FROM physio WHERE id IN ($physioIdsString)";
         $result = $conn->query($sql);
 
         if ($result !== false && $result->num_rows > 0) {
