@@ -24,8 +24,8 @@ INSERT INTO `provision` (`id`, `description`, `cost`, `name`) VALUES
 ('P3', 'Physical therapy session', 80, 'Physical Therapy');
 
 INSERT INTO `patient_physio` (`patient_id`, `physio_id`, `timestamp`, `status`) VALUES
-(5, 2, '2023-06-12 00:12:00', 'accepted'),
-(5, 3, '2023-06-13 00:12:00', 'pending'),
-(6, 3, '2023-06-14 00:12:00', 'accepted'),
-(7, 4, '2023-06-15 00:12:00', 'pending');
+(5, 2, '2023-06-12 12:00:00', 'accepted'),
+(5, 3, '2023-06-13 12:00:00', 'pending'),
+(6, 3, '2023-06-14 12:00:00', 'accepted'),
+(7, 4, '2023-06-15 12:00:00', 'pending');
 
