@@ -9,7 +9,7 @@
 
         // Prepare the SQL statement to fetch provisions with optional limit
         if ($amka !== null) {
-            $stmt = $conn->prepare("SELECT `name`, `surname` FROM `patient` WHERE amka = ? LIMIT 1");
+            $stmt = $conn->prepare("SELECT `name`, `surname`, `phone_number`, `sex` FROM `patient` WHERE amka = ? LIMIT 1");
             $stmt->bind_param('s',$amka);
         } else {
             exit();
@@ -26,16 +26,17 @@
             exit();
         }
 
-        $stmt->bind_result($name, $surname);
+        $stmt->bind_result($name, $surname, $phone, $sex);
 
         // Create an empty array to store provisions
         // $patient = array();
 
         // Fetch provisions and add them to the array
         while ($stmt->fetch()) {
-            $data = ['name' => $name, 'surname' => $surname];
+            $data = ['name' => $name, 'surname' => $surname, 'phone_number' => $phone, 'sex' => $sex];
         }
-
+        
+       
         // Close the statement
         $stmt->close();
 
