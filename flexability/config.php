@@ -3,7 +3,7 @@
    $uname = 'root';
    $pass = '';
    $dbname = "flexability";
-   $port = 3306;
+   $port = 3307;
 
    $conn = new mysqli($host, $uname, $pass, $dbname, $port);
 

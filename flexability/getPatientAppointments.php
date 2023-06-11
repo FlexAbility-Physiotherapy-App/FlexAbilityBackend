@@ -17,8 +17,10 @@
                 $newAppointment = array();
                 $appointmentTimestamp = $row['timestamp'];
                 $physioName = $row['name'];
+                $physioPhone = $row['phone_number'];
                 $newAppointment = explode(" ", $appointmentTimestamp);
                 array_push($newAppointment, $physioName);
+                array_push($newAppointment, $physioPhone);
                 array_push($appointments, $newAppointment);
             }
         }

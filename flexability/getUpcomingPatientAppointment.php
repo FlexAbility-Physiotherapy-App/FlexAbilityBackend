@@ -16,8 +16,10 @@
             while ($row = $result->fetch_assoc()) {
                 $upcomingAppointmentTimestamp = $row['timestamp'];
                 $physioName = $row['name'];
+                $physioPhone = $row['phone_number'];
                 $upcomingAppointment = explode(" ", $upcomingAppointmentTimestamp);
                 array_push($upcomingAppointment, $physioName);
+                array_push($upcomingAppointment, $physioPhone);
             }
         }
         
