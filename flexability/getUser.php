@@ -18,7 +18,7 @@
             $stmt = $conn->prepare("SELECT user.id, user.username, user.password, user.category
                                     FROM user
                                     WHERE user.username = ? AND user.password = ?");
-            $stmt->bind_param("si", $username, $password);
+            $stmt->bind_param("ss", $username, $password);
         }
         else{
             exit();
