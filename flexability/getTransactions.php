@@ -19,7 +19,7 @@
                                     INNER JOIN physio p ON pp.physio_id = p.id
                                     INNER JOIN provision pr ON pp.provision_id = pr.id
                                     WHERE pp.patient_id = ? AND pp.status = 'completed'
-                                    ORDER BY physio_id ASC  
+                                    ORDER BY pp.timestamp DESC  
                                     LIMIT ?");
             $stmt->bind_param("ii", $patient, $limit);
         } 
@@ -30,7 +30,7 @@
                                     JOIN patient_physio pp ON pp.physio_id = p.id
                                     JOIN provision pr ON pr.id = pp.provision_id 
                                     WHERE pp.physio_id = ? AND pp.patient_id = ? AND pp.status = 'completed' AND DATE(pp.timestamp) = ?
-                                    ORDER BY physio_id ASC");
+                                    ORDER BY pp.timestamp DESC");
                                     
             $stmt->bind_param("iis", $physio, $patient, $date);
         }
@@ -41,7 +41,7 @@
                                     JOIN patient_physio pp ON pp.physio_id = p.id
                                     JOIN provision pr ON pr.id = pp.provision_id
                                     WHERE pp.patient_id = ? AND pp.status = 'completed'
-                                    ORDER BY physio_id ASC");
+                                    ORDER BY pp.timestamp DESC");
             $stmt->bind_param("i", $patient);
         }
         
