@@ -8,7 +8,7 @@
         $usname = null;
         $pword = null;
         $category = null;
-
+        
         // Get parameters username and password
         $username = isset($_GET['username']) ? $_GET['username'] : '';
         $password = isset($_GET['password']) ? $_GET['password'] : '';
