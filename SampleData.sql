@@ -1,31 +1,39 @@
 -- Populate database with data for testing purposes
 INSERT INTO `user` (`username`, `password`, `category`) VALUES
-('usrAdmin', 'pswAdmin', 'admin'),
-('usrPhysio1', 'pswPhysio1', 'physio'),
-('usrPhysio2', 'pswPhysio2', 'physio'),
-('usrPhysio3', 'pswPhysio3', 'physio'),
-('usrPatient1', 'pswPatient1', 'patient'),
-('usrPatient2', 'pswPatient2', 'patient'),
-('usrPatient3', 'pswPatient3', 'patient');
+('usrAdmin', '1234', 'admin'),
+('usrPhysio1', '1234', 'physio'),
+('usrPhysio2', '1234', 'physio'),
+('usrPhysio3', '1234', 'physio'),
+('usrPatient1', '1234', 'patient'),
+('usrPatient2', '1234', 'patient'),
+('usrPatient3', '1234', 'patient');
 
 INSERT INTO `patient` (`id`, `name`, `surname`, `phone_number`, `sex`, `amka`) VALUES
-(5, 'John', 'Doe', '1234567890', 'Male', '55555555555'),
-(6, 'Jane', 'Smith', '9876543210', 'Female', '66666666666'),
-(7, 'Mike', 'Johnson', '5678901234', 'Male', '77777777777');
+(5, 'Γιάννης Χρήστου', '1234567890', 'Άρρεν', '55555555555'),
+(6, 'Ευθυμία', 'Πατουσάκη', '9876543210', 'θύλη', '66666666666'),
+(7, 'Μηχάλης', 'Σωτηρίου', '5678901234', 'Άρρεν', '77777777777');
 
 INSERT INTO `physio` (`id`, `address`, `name`, `afm`, `phone_number`) VALUES
-(2, '123 Main Street', 'Physio Care', '222222222', '1234567890'),
-(3, '456 Elm Street', 'Physio Wellness', '333333333', '9876543210'),
-(4, '789 Oak Street', 'Elite Physiotherapy', '444444444', '3355115599');
+(2, 'Δραγούμη 123', 'Physio Care', '222222222', '1234567890'),
+(3, 'Ελευθερίας 456', 'Physio Wellness', '333333333', '9876543210'),
+(4, 'Τζουμαγιάς 789', 'Elite Physiotherapy', '444444444', '3355115599');
 
 INSERT INTO `provision` (`id`, `description`, `cost`, `name`) VALUES
-('P1', 'Basic Check-up', 50, 'Check-up'),
-('P2', 'X-ray examination', 100, 'X-ray'),
-('P3', 'Physical therapy session', 80, 'Physical Therapy');
+('P1', 'Βασική διάγνωση', 50, 'Διάγνωση'),
+('P2', 'Εξέταση με ακτινογραφία X-ray', 100, 'Ακτινογραφία'),
+('P3', 'Ηλεκτροθεραπεία με ρεύματα TENS', 80, 'Ηλεκτροθεραπεία');
 
 INSERT INTO `patient_physio` (`patient_id`, `physio_id`, `timestamp`, `status`) VALUES
-(5, 2, '2023-06-12 12:00:00', 'accepted'),
-(5, 3, '2023-06-13 12:00:00', 'pending'),
-(6, 3, '2023-06-14 12:00:00', 'accepted'),
-(7, 4, '2023-06-15 12:00:00', 'pending');
+(5, 2, '2023-06-21 12:00:00', 'accepted'),
+(5, 3, '2023-06-22 15:00:00', 'pending'),
+(6, 3, '2023-06-23 11:00:00', 'accepted'),
+(7, 4, '2023-06-24 12:00:00', 'accepted'),
+(6, 2, '2023-06-21 18:00:00', 'accepted'),
+(7, 4, '2023-06-21 10:00:00', 'pending');
+
+INSERT INTO `patient_physio` (`patient_id`, `physio_id`, `timestamp`, `status`, `cost`, `comment`, `provision_id`) VALUES
+(5, 2, '2023-06-18 09:00:00', 'completed', 50, 'Συνταγογράφηση φυσιοθεραπείας', 'P1'),
+(6, 2, '2023-06-18 20:00:00', 'completed', 100, 'Συνταγογράφηση αναλγητικών φαρμάκων', 'P2'),
+(6, 3, '2023-06-18 16:00:00', 'completed', 80, 'Συνιστώνται καθημερινές μαλάξεις', 'P3'),
+(7, 4, '2023-06-18 13:00:00', 'completed', 100, 'Προτροπή σε ορθοπαιδικό', 'P2');
 
